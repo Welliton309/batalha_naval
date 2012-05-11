@@ -17,24 +17,24 @@
 # Livre(FSF) Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 def number_to_alpha(number)
-	('A'..'Z').to_a[number]
+  ('A'..'Z').to_a[number]
 end
 
 def alpha_to_number(letra)
-	('A'..'Z').to_a.to_s.index(letra.upcase)
+  ('A'..'Z').to_a.to_s.index(letra.upcase)
 end
 
 class ParteNavio
-	attr_accessor :destruido, :navio
+  attr_accessor :destruido, :navio
 
-	def initialize(navio)
-		@navio = navio
-		@destruido = false
-	end
+  def initialize(navio)
+    @navio = navio
+    @destruido = false
+  end
 
-	def destruido?
-		@destruido
-	end
+  def destruido?
+    @destruido
+  end
 end
 
 class Navio
@@ -84,11 +84,11 @@ class FabricaNavio
     end
     navio = Navio.new nome
     partes = Array.new tamanho
-		partes.each_index do |i|
-			partes[i] = ParteNavio.new(navio)
-		end
-		navio.partes = partes
-		navio
+    partes.each_index do |i|
+      partes[i] = ParteNavio.new(navio)
+    end
+    navio.partes = partes
+    navio
   end
 end
 
@@ -138,12 +138,12 @@ class Campo
   
   def imprimir_rival
     saida = "\n"
-		header = "     "  
-		count = 1
+    header = "     "  
+    count = 1
     @grade.each do |x|
-			saida << "%2d " % count
-			header << "#{number_to_alpha(count-1)}   "
-			count += 1
+      saida << "%2d " % count
+      header << "#{number_to_alpha(count-1)}   "
+      count += 1
       x.each do |y|
         c = nil
         if y.atacado?
@@ -165,11 +165,11 @@ class Campo
   def imprimir
     saida = "\n"
     header = "     "
-		count = 1
+    count = 1
     @grade.each do |x|
-			saida << "%2d " % count
-			header << "#{number_to_alpha(count-1)}   "
-			count += 1
+      saida << "%2d " % count
+      header << "#{number_to_alpha(count-1)}   "
+      count += 1
       x.each do |y|
         c = nil
         if y.parte_navio.nil?
@@ -189,24 +189,24 @@ class Campo
       end
       saida << "|\n"
     end
-		header << saida
+    header << saida
   end
   
   def atacar(x,y)
     quadrante = @grade[x][alpha_to_number(y)]
     quadrante.atacado = true
-		mensagem = nil
-		if quadrante.parte_navio.nil?
-			mensagem = "Nenhum navio foi atingido durante o ataque!\n"
-		else
-			quadrante.parte_navio.destruido = true
-			mensagem = "Um navio inimigo foi atingido durante o ataque!\n"
-			navio = quadrante.parte_navio.navio
-			if navio.destruido?
-				mensagem << "O navio #{navio.nome} foi destruido!\n"
-			end
-		end
-		mensagem
+    mensagem = nil
+    if quadrante.parte_navio.nil?
+      mensagem = "Nenhum navio foi atingido durante o ataque!\n"
+    else
+      quadrante.parte_navio.destruido = true
+      mensagem = "Um navio inimigo foi atingido durante o ataque!\n"
+      navio = quadrante.parte_navio.navio
+      if navio.destruido?
+        mensagem << "O navio #{navio.nome} foi destruido!\n"
+      end
+    end
+    mensagem
   end
 end
 
@@ -229,27 +229,27 @@ class Jogador
     @nome = nome
     grade = FabricaGrade.criar_grade(10,10)
     @campo = Campo.new(grade)
-		@navios = Array.new
+    @navios = Array.new
   end
 
-	def imprimir_campo
-		@campo.imprimir
-	end
-	
-	def imprimir_campo_rival
-		@campo.imprimir_rival
-	end
+  def imprimir_campo
+    @campo.imprimir
+  end
+  
+  def imprimir_campo_rival
+    @campo.imprimir_rival
+  end
 
-	def perdeu?
-		perdeu = true
-		@navios.each do |navio|
-			unless navio.destruido?
-				perdeu = false
-				break
-			end
-		end
-		perdeu
-	end
+  def perdeu?
+    perdeu = true
+    @navios.each do |navio|
+      unless navio.destruido?
+        perdeu = false
+        break
+      end
+    end
+    perdeu
+  end
 end
 
 class Partida
@@ -257,7 +257,7 @@ class Partida
   
   def initialize
     @jogadores = Hash.new
-		@ativo = true
+    @ativo = true
   end
   
   def entrar(nome, navios, coordenadas)
@@ -272,7 +272,7 @@ class Partida
     campo = jogador.campo
     navios.each_index do |i|
       campo.posicionar_navio navios[i], coordenadas[i]
-			jogador.navios << navios[i]
+      jogador.navios << navios[i]
     end
   end
   
@@ -301,74 +301,74 @@ class Partida
   end
   
   def atacar(nome,x,y)
-		mensagem
-		if @ativo
-			campo = jogador_rival(nome).campo
-			mensagem = campo.atacar(x,y)
-			mensagem << verificar_partida(nome)
-		else
-		  mensagem = "O jogo acabou!\n"
-			mensagem << verificar_partida(nome)
-		end
-		mensagem
+    mensagem
+    if @ativo
+      campo = jogador_rival(nome).campo
+      mensagem = campo.atacar(x,y)
+      mensagem << verificar_partida(nome)
+    else
+      mensagem = "O jogo acabou!\n"
+      mensagem << verificar_partida(nome)
+    end
+    mensagem
   end
 
-	def imprimir_campos(nome)
-		saida = "Seu campo: \n"
-		saida << jogador(nome).imprimir_campo
-		saida << "Campo rival: \n"
-		saida << jogador_rival(nome).imprimir_campo_rival
-	end
+  def imprimir_campos(nome)
+    saida = "Seu campo: \n"
+    saida << jogador(nome).imprimir_campo
+    saida << "Campo rival: \n"
+    saida << jogador_rival(nome).imprimir_campo_rival
+  end
 
-	def verificar_partida(nome)
-		mensagem = ""
-		if jogador(nome).perdeu?
-			mensagem = "Voce perdeu!\n"
-			@ativo = false
-		elsif jogador_rival(nome).perdeu?
-			mensagem = "Voce venceu!\n"
-			@ativo = false
-		end
-		mensagem
-	end
+  def verificar_partida(nome)
+    mensagem = ""
+    if jogador(nome).perdeu?
+      mensagem = "Voce perdeu!\n"
+      @ativo = false
+    elsif jogador_rival(nome).perdeu?
+      mensagem = "Voce venceu!\n"
+      @ativo = false
+    end
+    mensagem
+  end
 end
 
 class BatalhaNaval
-	attr_accessor :partida_espera, :id_partida, :partidas
+  attr_accessor :partida_espera, :id_partida, :partidas
 
-	def initialize
-		@partida_espera = nil
-		@id_partida = nil
-		@partidas = Hash.new
-	end
+  def initialize
+    @partida_espera = nil
+    @id_partida = nil
+    @partidas = Hash.new
+  end
 
-	def jogar(nome, navios, coordenadas)
-		if @partida_espera.nil?
-			@partida_espera = Partida.new
-			@id_partida = @partidas.keys.size
-			@partidas[@id_partida] = @partida_espera
-			@partida_espera.entrar nome, navios, coordenadas
-		else
-		  @partida_espera.entrar nome, navios, coordenadas
-		  @partida_espera = nil
-	  end
-	  @id_partida
-	end
-	
-	def atacar(id,nome,x,y)
-		partida(id).atacar(nome,x,y)
+  def jogar(nome, navios, coordenadas)
+    if @partida_espera.nil?
+      @partida_espera = Partida.new
+      @id_partida = @partidas.keys.size
+      @partidas[@id_partida] = @partida_espera
+      @partida_espera.entrar nome, navios, coordenadas
+    else
+      @partida_espera.entrar nome, navios, coordenadas
+      @partida_espera = nil
+    end
+    @id_partida
+  end
+  
+  def atacar(id,nome,x,y)
+    partida(id).atacar(nome,x,y)
   end
   
   def imprimir_campos(id, nome)
     partida(id).imprimir_campos(nome)
   end
-	
-	private
-	def partida(id)
-	  unless @partidas.key? id
-	    raise "Partida não encontrada"
+  
+  private
+  def partida(id)
+    unless @partidas.key? id
+      raise "Partida não encontrada"
     end
-	  @partidas[id]
+    @partidas[id]
   end
 end
 
@@ -397,13 +397,13 @@ puts "Jogadores: #{jogo.partidas[id].jogador1.nome} #{jogo.partidas[id].jogador2
 
 jogadores = [nome1,felipe]
 while(1) do
-	jogador = jogadores.shift
-	puts "#{jogador}"
-	print "Coordenada x: "
-	x = gets.chomp.to_i() -1
-	print "Coordenada y: "
-	y = gets.chomp
-	puts jogo.atacar(id, jogador, x, y)
-	puts jogo.imprimir_campos(id, jogador)
-	jogadores << jogador
+  jogador = jogadores.shift
+  puts "#{jogador}"
+  print "Coordenada x: "
+  x = gets.chomp.to_i() -1
+  print "Coordenada y: "
+  y = gets.chomp
+  puts jogo.atacar(id, jogador, x, y)
+  puts jogo.imprimir_campos(id, jogador)
+  jogadores << jogador
 end

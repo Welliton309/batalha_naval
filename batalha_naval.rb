@@ -104,6 +104,7 @@ end
 
 class Quadrante
   attr_accessor :parte_navio, :atacado
+
   def initialize
     @parte_navio = nil
     @atacado = false
@@ -225,6 +226,7 @@ end
 
 class Jogador
   attr_accessor :nome, :campo, :navios
+
   def initialize(nome)
     @nome = nome
     grade = FabricaGrade.criar_grade(10,10)
@@ -253,11 +255,10 @@ class Jogador
 end
 
 class Partida
-  attr_accessor :jogador1, :jogador2, :ativo
+  attr_accessor :jogador1, :jogador2, :ativa
   
   def initialize
-    @jogadores = Hash.new
-    @ativo = true
+    @ativa = true
   end
   
   def entrar(nome, navios, coordenadas)
@@ -302,7 +303,7 @@ class Partida
   
   def atacar(nome,x,y)
     mensagem
-    if @ativo
+    if @ativa
       campo = jogador_rival(nome).campo
       mensagem = campo.atacar(x,y)
       mensagem << verificar_partida(nome)
@@ -324,10 +325,10 @@ class Partida
     mensagem = ""
     if jogador(nome).perdeu?
       mensagem = "Voce perdeu!\n"
-      @ativo = false
+      @ativa = false
     elsif jogador_rival(nome).perdeu?
       mensagem = "Voce venceu!\n"
-      @ativo = false
+      @ativa = false
     end
     mensagem
   end

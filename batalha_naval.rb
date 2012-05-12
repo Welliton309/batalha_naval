@@ -233,6 +233,13 @@ class Jogador
     @campo = Campo.new(grade)
     @navios = Array.new
   end
+	
+	def inicializar_campo(navios, coordenadas)
+    navios.each_index do |i|
+      @campo.posicionar_navio navios[i], coordenadas[i]
+      @navios << navios[i]
+    end
+	end
 
   def imprimir_campo
     @campo.imprimir
@@ -270,11 +277,7 @@ class Partida
     else
       raise "Apenas dois jogadores por partidas"
     end
-    campo = jogador.campo
-    navios.each_index do |i|
-      campo.posicionar_navio navios[i], coordenadas[i]
-      jogador.navios << navios[i]
-    end
+		jogador.inicializar_campo(navios, coordenadas)
   end
   
   def jogador_rival(nome)
@@ -302,7 +305,7 @@ class Partida
   end
   
   def atacar(nome,x,y)
-    mensagem
+    mensagem = ''
     if @ativa
       campo = jogador_rival(nome).campo
       mensagem = campo.atacar(x,y)

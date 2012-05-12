@@ -16,48 +16,15 @@
 # junto com este programa, se não, escreva para a Fundação do Software
 # Livre(FSF) Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
+require 'parte_navio'
+require 'navio'
+
 def number_to_alpha(number)
   ('A'..'Z').to_a[number]
 end
 
 def alpha_to_number(letra)
   ('A'..'Z').to_a.to_s.index(letra.upcase)
-end
-
-class ParteNavio
-  attr_accessor :destruido, :navio
-
-  def initialize(navio)
-    @navio = navio
-    @destruido = false
-  end
-
-  def destruido?
-    @destruido
-  end
-end
-
-class Navio
-  attr_accessor :nome, :partes
-  
-  def initialize(nome)
-    @nome = nome
-  end
-  
-  def tamanho
-    partes.size
-  end
-  
-  def destruido?
-    destruido = true
-    partes.each do |parte_navio|
-      unless parte_navio.destruido?
-        destruido = false
-        break
-      end
-    end
-    destruido
-  end
 end
 
 class FabricaNavio

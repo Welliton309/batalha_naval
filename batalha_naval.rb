@@ -16,9 +16,9 @@
 # junto com este programa, se não, escreva para a Fundação do Software
 # Livre(FSF) Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-require 'parte_navio'
-require 'navio'
-require 'fabrica_navio'
+require 'app/parte_navio'
+require 'app/navio'
+require 'app/fabrica_navio'
 
 def number_to_alpha(number)
   ('A'..'Z').to_a[number]

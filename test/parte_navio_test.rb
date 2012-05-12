@@ -19,8 +19,8 @@
 # Livre(FSF) Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 require 'test/unit'
-require 'parte_navio'
-require 'navio'
+require 'app/parte_navio'
+require 'app/navio'
 
 class ParteNavioTest < Test::Unit::TestCase
   

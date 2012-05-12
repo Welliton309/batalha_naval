@@ -19,7 +19,7 @@
 # Livre(FSF) Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 require 'test/unit'
-require 'fabrica_navio'
+require 'app/fabrica_navio'
 
 class FabricaNavioTest < Test::Unit::TestCase
   def test_deve_criar_porta_avioes_com_tamanho_6

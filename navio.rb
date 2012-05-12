@@ -39,4 +39,11 @@ class Navio
     end
     destruido
   end
+
+  def destruir!
+    @partes.each_index do |i|
+      @partes[i].atacar!
+    end
+    destruido?
+  end
 end

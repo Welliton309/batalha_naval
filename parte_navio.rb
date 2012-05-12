@@ -30,7 +30,7 @@ class ParteNavio
     @destruida
   end
 
-  def atacar
+  def atacar!
     @destruida = true
   end
 end

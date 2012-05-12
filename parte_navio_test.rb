@@ -38,7 +38,7 @@ class ParteNavioTest < Test::Unit::TestCase
 
   def test_deve_deve_destruir_parte_quando_atacada
     parte = criar_parte
-    parte.atacar
+    parte.atacar!
     assert parte.destruida?
   end
   

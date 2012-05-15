@@ -22,44 +22,6 @@ require 'app/fabrica_navio'
 require 'app/coordenada'
 require 'app/quadrante'
 
-
-class Jogador
-  attr_accessor :nome, :campo, :navios
-
-  def initialize(nome)
-    @nome = nome
-    grade = FabricaGrade.criar_grade(10,10)
-    @campo = Campo.new(grade)
-    @navios = Array.new
-  end
-	
-	def inicializar_campo(navios, coordenadas)
-    navios.each_index do |i|
-      @campo.posicionar_navio navios[i], coordenadas[i]
-      @navios << navios[i]
-    end
-	end
-
-  def imprimir_campo
-    @campo.imprimir
-  end
-  
-  def imprimir_campo_rival
-    @campo.imprimir_rival
-  end
-
-  def perdeu?
-    perdeu = true
-    @navios.each do |navio|
-      unless navio.destruido?
-        perdeu = false
-        break
-      end
-    end
-    perdeu
-  end
-end
-
 class Partida
   attr_accessor :jogador1, :jogador2, :ativa
   

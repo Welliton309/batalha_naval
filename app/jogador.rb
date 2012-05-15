@@ -2,9 +2,7 @@
 
 # Copyright 2012 Welliton de Souza
 #
-# Este arquivo é parte do programa BatalhaNaval
-#
-# BatalhaNaval é um software livre; você pode redistribui-lo e/ou 
+# Este programa é um software livre; você pode redistribui-lo e/ou 
 # modifica-lo dentro dos termos da Licença Pública Geral GNU como 
 # publicada pela Fundação do Software Livre (FSF); na versão 2 da 
 # Licença, ou (na sua opnião) qualquer versão.
@@ -18,11 +16,41 @@
 # junto com este programa, se não, escreva para a Fundação do Software
 # Livre(FSF) Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-require 'test/unit'
-require 'test/parte_navio_test'
-require 'test/navio_test'
-require 'test/fabrica_navio_test'
-require 'test/coordenada_test'
-require 'test/quadrante_test'
-require 'test/campo_test'
-require 'test/jogador_test'
+#require 'app/navio'
+#require 'app/fabrica_navio'
+#require 'app/coordenada'
+#require 'app/quadrante'
+require 'app/fabrica_grade'
+require 'app/campo'
+
+class Jogador
+  attr_accessor :nome
+
+  def initialize(nome, campo)
+    @nome = nome
+    @campo = campo
+  end
+	
+  def receber_ataque(coordenada)
+    @campo.atacar! coordenada
+  end
+
+  def imprimir_campo(nome)
+    if nome.eql? @nome
+      @campo.imprimir
+    else
+      @campo.imprimir_rival
+    end
+  end
+  
+  def perdeu?
+    perdeu = true
+    @campo.navios.each do |navio|
+      unless navio.destruido?
+        perdeu = false
+        break
+      end
+    end
+    perdeu
+  end
+end

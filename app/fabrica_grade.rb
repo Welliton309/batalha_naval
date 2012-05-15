@@ -19,7 +19,7 @@
 require 'app/quadrante'
 
 class FabricaGrade
-  def self.criar_grade(x,y)
+  def self.construir_grade(x,y)
     grade = Array.new x
     grade.each_index do |x_index|
       grade[x_index] = Array.new y

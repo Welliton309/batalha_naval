@@ -29,6 +29,12 @@ class CampoTest < Test::Unit::TestCase
     assert_not_nil c.grade
   end
 
+  def test_deve_inicializar_array_de_navios
+    g = criar_grade
+    c = Campo.new g
+    assert_not_nil c.navios
+  end
+
   def test_deve_posicionar_navio_horizontal
     campo = criar_campo
     n = criar_navio
@@ -39,6 +45,7 @@ class CampoTest < Test::Unit::TestCase
     n.tamanho.times do |i|
       assert_not_nil campo.grade[x][y+i].parte_navio
     end
+    assert_not_nil campo.navios[0]
   end
 
   def test_deve_posicionar_navio_vertical
@@ -51,6 +58,7 @@ class CampoTest < Test::Unit::TestCase
     n.tamanho.times do |i|
       assert_not_nil campo.grade[x+i][y].parte_navio
     end
+    assert_not_nil campo.navios[0]
   end
 
   def test_deve_falhar_para_coordenada_invalida
@@ -88,7 +96,7 @@ class CampoTest < Test::Unit::TestCase
 
   private
   def criar_grade(x=10,y=10)
-    FabricaGrade.criar_grade x, y
+    FabricaGrade.construir_grade x, y
   end
 
   def criar_campo(x=10,y=10)

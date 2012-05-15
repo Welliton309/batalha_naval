@@ -16,11 +16,14 @@
 # junto com este programa, se não, escreva para a Fundação do Software
 # Livre(FSF) Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
+require 'app/coordenada'
+
 class Campo
-  attr_accessor :grade
+  attr_accessor :grade, :navios
   
   def initialize(grade)
     @grade = grade
+    @navios = Array.new
   end
   
   def posicionar_navio(navio, coordenada)
@@ -36,6 +39,7 @@ class Campo
     else
       raise "Coordenada invalida."
     end
+    @navios << navio
   end
   
   def imprimir_rival

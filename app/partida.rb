@@ -64,10 +64,10 @@ class Partida
     mensagem = ""
     if jogador(nome).perdeu?
       mensagem = "Voce perdeu!\n"
-      parar!
+      acabar!
     elsif jogador_rival(nome).perdeu?
       mensagem = "Voce venceu!\n"
-      parar!
+      acabar!
     end
     mensagem
   end
@@ -79,7 +79,7 @@ class Partida
     @ativa = true
   end
 
-  def parar!
+  def acabar!
     @ativa = false
   end
 

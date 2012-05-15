@@ -18,51 +18,47 @@
 
 require 'app/partida'
 require 'app/regra'
+require 'app/batalha_naval'
 
-class BatalhaNaval
-  attr_accessor :partida_espera, :id_partida, :partidas, :regra
-
-  def initialize(regra = Regra.new)
-    @partida_espera = nil
-    @id_partida = nil
-    @partidas = Hash.new
-    @regra = regra
+class BatalhaNavalDistribuido
+  def initialize
+    @jogo = BatalhaNaval.new
+    @partidas_espera = Array.new
   end
 
   def jogar(nome, coordenadas)
-    if @partida_espera.nil?
-      @partida_espera = Partida.new(regra)
-      @id_partida = @partidas.keys.size
-      @partidas[@id_partida] = @partida_espera
-      @partida_espera.entrar nome, coordenadas
-    else
-      @partida_espera.entrar nome, coordenadas
-      @partida_espera.iniciar!
-      @partida_espera = nil
-    end
-    @id_partida
+    id = @jogo.jogar(nome, coordenadas)
+    esperar_jogador id
+    id
   end
-  
-  def atacar(id,nome,coordenada)
-    partida(id).atacar(nome,coordenada)
-  end
-  
-  def imprimir_campos(id, nome)
-    partida(id).imprimir_campos(nome)
+
+  def atacar(id, nome, coordenadas)
+    m = @jogo.atacar id, nome, coordenadas
+    esperar_jogador(id)
+    m
   end
 
   def ordem_navios
-    regra.navios
+    @jogo.ordem_navios
+  end
+
+  def imprimir_campos(id, nome)
+    @jogo.imprimir_campos(id,nome)
   end
 
   def ativo?(id)
-    partida(id).ativa?
+    @jogo.ativo? id
   end
-  
-  def partida(id)
-    unless @partidas.key? id
-      raise "Partida não encontrada: #{id}"
+
+  private
+  def esperar_jogador(id)
+    if @partidas_espera.include? id
+      @partidas_espera.delete id
+    else
+      @partidas_espera << id
+      while @partidas_espera.include? id 
+        sleep(1)
+      end
     end
-    @partidas[id]
   end
 end

@@ -18,13 +18,11 @@
 # junto com este programa, se não, escreva para a Fundação do Software
 # Livre(FSF) Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-require 'test/unit'
-require 'test/parte_navio_test'
-require 'test/navio_test'
-require 'test/fabrica_navio_test'
-require 'test/coordenada_test'
-require 'test/quadrante_test'
-require 'test/campo_test'
-require 'test/jogador_test'
-require 'test/partida_test'
-require 'test/batalha_naval_test'
+require 'drb'
+require 'app/rmi/batalha_naval_distribuido'
+
+DRb.start_service nil, BatalhaNavalDistribuido.new
+
+puts DRb.uri
+
+DRb.thread.join

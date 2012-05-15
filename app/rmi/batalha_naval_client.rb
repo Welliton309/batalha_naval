@@ -18,13 +18,35 @@
 # junto com este programa, se não, escreva para a Fundação do Software
 # Livre(FSF) Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-require 'test/unit'
-require 'test/parte_navio_test'
-require 'test/navio_test'
-require 'test/fabrica_navio_test'
-require 'test/coordenada_test'
-require 'test/quadrante_test'
-require 'test/campo_test'
-require 'test/jogador_test'
-require 'test/partida_test'
-require 'test/batalha_naval_test'
+require 'drb'
+
+DRb.start_service
+
+jogo = DRbObject.new nil, ARGV.shift
+
+puts "Batalha Naval"
+print "Seu nome: "
+$stdout.flush
+nome = gets.chomp
+
+navios = jogo.ordem_navios
+
+puts "Informe as cordenadas para,"
+coordenadas = []
+navios.each do |tipo|
+  print "#{tipo}: "
+  $stdout.flush
+  coordenadas << gets.chomp
+end
+
+puts "Entrando no jogo.."
+id = jogo.jogar nome, coordenadas
+puts jogo.imprimir_campos(id, nome)
+
+while jogo.ativo? id
+  print "Atacar coordenada: "
+  $stdout.flush
+  coordenada = gets.chomp
+  puts jogo.atacar(id,nome,coordenada)
+  puts jogo.imprimir_campos(id,nome)
+end

@@ -36,10 +36,14 @@ class Coordenada
     ('A'..'Z').to_a.to_s.index(letra.upcase)
   end
 
-  def self.parse(coordenada, orientacao=:horizontal)
+  def self.parse(coordenada)
     begin
-      x = /(\d+)/.match(coordenada)[1]
-      y = /(\D+)/.match(coordenada)[1]
+      x = /([0-9]+)/.match(coordenada)[1]
+      y = /([A-Za-z]+)/.match(coordenada)[1]
+      orientacao = :horizontal
+      if coordenada =~ /\|/
+        orientacao = :vertical
+      end
       Coordenada.new(x.to_i() - 1, char2num(y), orientacao)
     rescue
       raise "Coordenada invalida: #{coordenada}"

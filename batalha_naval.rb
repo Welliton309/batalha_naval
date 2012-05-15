@@ -19,24 +19,7 @@
 require 'app/parte_navio'
 require 'app/navio'
 require 'app/fabrica_navio'
-
-def number_to_alpha(number)
-  ('A'..'Z').to_a[number]
-end
-
-def alpha_to_number(letra)
-  ('A'..'Z').to_a.to_s.index(letra.upcase)
-end
-
-class Coordenada
-  attr_accessor :x, :y, :orientacao
-  
-  def initialize(x,y,orientacao=:horizontal)
-    @x = x
-    @y = y
-    @orientacao = orientacao
-  end
-end
+require 'app/coordenada'
 
 class Quadrante
   attr_accessor :parte_navio, :atacado
@@ -79,7 +62,7 @@ class Campo
     count = 1
     @grade.each do |x|
       saida << "%2d " % count
-      header << "#{number_to_alpha(count-1)}   "
+      header << "#{Coordenada.num2char(count-1)}   "
       count += 1
       x.each do |y|
         c = nil
@@ -105,7 +88,7 @@ class Campo
     count = 1
     @grade.each do |x|
       saida << "%2d " % count
-      header << "#{number_to_alpha(count-1)}   "
+      header << "#{Coordenada.num2char(count-1)}   "
       count += 1
       x.each do |y|
         c = nil
@@ -130,13 +113,13 @@ class Campo
   end
   
   def atacar(x,y)
-    quadrante = @grade[x][alpha_to_number(y)]
+    quadrante = @grade[x][Coordenada.char2num(y)]
     quadrante.atacado = true
     mensagem = nil
     if quadrante.parte_navio.nil?
       mensagem = "Nenhum navio foi atingido durante o ataque!\n"
     else
-      quadrante.parte_navio.destruido = true
+      quadrante.parte_navio.atacar!
       mensagem = "Um navio inimigo foi atingido durante o ataque!\n"
       navio = quadrante.parte_navio.navio
       if navio.destruido?

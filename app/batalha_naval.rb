@@ -16,11 +16,7 @@
 # junto com este programa, se não, escreva para a Fundação do Software
 # Livre(FSF) Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-require 'app/parte_navio'
-require 'app/navio'
-require 'app/fabrica_navio'
-require 'app/coordenada'
-require 'app/quadrante'
+require 'app/partida'
 
 class BatalhaNaval
   attr_accessor :partida_espera, :id_partida, :partidas
@@ -59,40 +55,4 @@ class BatalhaNaval
     end
     @partidas[id]
   end
-end
-
-#testes
-jogo = BatalhaNaval.new
-
-felipe = "Steve"
-navios_felipe = Array.new
-navios_felipe << FabricaNavio.construir_navio(:submarino)
-coordenadas_navios_felipe = Array.new
-coordenadas_navios_felipe << Coordenada.new(0,0,:horizontal)
-jogo.jogar felipe, navios_felipe, coordenadas_navios_felipe
-
-nome1 = "Lito"
-coordenadas = Array.new
-navios = Array.new
-coordenadas << Coordenada.new(0,0,:horizontal)
-navios << FabricaNavio.construir_navio(:porta_avioes)
-coordenadas << Coordenada.new(2,5,:vertical)
-navios << FabricaNavio.construir_navio(:fragata)
-coordenadas << Coordenada.new(5,8,:vertical)
-navios << FabricaNavio.construir_navio(:cruzador)
-id = jogo.jogar nome1, navios, coordenadas
-
-puts "Jogadores: #{jogo.partidas[id].jogador1.nome} #{jogo.partidas[id].jogador2.nome}"
-
-jogadores = [nome1,felipe]
-while(1) do
-  jogador = jogadores.shift
-  puts "#{jogador}"
-  print "Coordenada x: "
-  x = gets.chomp.to_i() -1
-  print "Coordenada y: "
-  y = gets.chomp
-  puts jogo.atacar(id, jogador, x, y)
-  puts jogo.imprimir_campos(id, jogador)
-  jogadores << jogador
 end

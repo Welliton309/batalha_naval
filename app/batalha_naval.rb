@@ -17,31 +17,33 @@
 # Livre(FSF) Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 require 'app/partida'
+require 'app/regra'
 
 class BatalhaNaval
-  attr_accessor :partida_espera, :id_partida, :partidas
+  attr_accessor :partida_espera, :id_partida, :partidas, :regra
 
-  def initialize
+  def initialize(regra = Regra.new)
     @partida_espera = nil
     @id_partida = nil
     @partidas = Hash.new
+    @regra = regra
   end
 
-  def jogar(nome, navios, coordenadas)
+  def jogar(nome, coordenadas)
     if @partida_espera.nil?
-      @partida_espera = Partida.new
+      @partida_espera = Partida.new(regra)
       @id_partida = @partidas.keys.size
       @partidas[@id_partida] = @partida_espera
-      @partida_espera.entrar nome, navios, coordenadas
+      @partida_espera.entrar nome, coordenadas
     else
-      @partida_espera.entrar nome, navios, coordenadas
+      @partida_espera.entrar nome, coordenadas
       @partida_espera = nil
     end
     @id_partida
   end
   
-  def atacar(id,nome,x,y)
-    partida(id).atacar(nome,x,y)
+  def atacar(id,nome,coordenada)
+    partida(id).atacar(nome,coordenada)
   end
   
   def imprimir_campos(id, nome)
@@ -51,7 +53,7 @@ class BatalhaNaval
   private
   def partida(id)
     unless @partidas.key? id
-      raise "Partida não encontrada"
+      raise "Partida não encontrada: #{id}"
     end
     @partidas[id]
   end

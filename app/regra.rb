@@ -16,33 +16,14 @@
 # junto com este programa, se não, escreva para a Fundação do Software
 # Livre(FSF) Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-class Coordenada
-  attr_accessor :x, :y, :orientacao
-  
-  def initialize(x,y,orientacao=:horizontal)
-    if x < 0 or y < 0
-      raise "As coordenadas não podem ser valores negativos"
-    end
-    @x = x
-    @y = y
-    @orientacao = orientacao
-  end
+class Regra
+  attr_accessor :tamanho_x, :tamanho_y, :navios
 
-  def self.num2char(number)
-    ('A'..'Z').to_a[number]
-  end
-  
-  def self.char2num(letra)
-    ('A'..'Z').to_a.to_s.index(letra.upcase)
-  end
+  def initialize(tamanho_x = 10, tamanho_y = 10, 
+    navios = [:porta_avioes,:fragata,:cruzador,:destroyer,:submarino])
 
-  def self.parse(coordenada, orientacao=:horizontal)
-    begin
-      x = /(\d+)/.match(coordenada)[1]
-      y = /(\D+)/.match(coordenada)[1]
-      Coordenada.new(x.to_i() - 1, char2num(y), orientacao)
-    rescue
-      raise "Coordenada invalida: #{coordenada}"
-    end
+    @tamanho_x = tamanho_x
+    @tamanho_y = tamanho_y
+    @navios = navios
   end
 end

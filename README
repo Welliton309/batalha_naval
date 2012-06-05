@@ -1,2 +1,10 @@
-Jogo de Batalha Naval escrito em Ruby e utiliza Distributed Ruby (DRb).
-Esse projeto é parte de um trabalho de faculdade sobre sistemas distribuídos.
+Jogo de Batalha Naval.
+Possui duas versões:
+ * escrito em Ruby, utiliza Distributed Ruby (DRb).
+ * escrito em Java, utiliza RMI.
+Esse projeto foi parte de um trabalho de faculdade sobre sistemas distribuídos.
+
+Trabalhos futuros
+Melhorar toda estrutura do jogo.
+Acrescentar interface web.
+...

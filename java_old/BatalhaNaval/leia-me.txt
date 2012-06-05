@@ -1,0 +1,12 @@
+O projeto foi desenvolvido utilizando o programa NetBeans.
+O código fonte está no diretório 'src'.
+O programa está compilado, os binários estão no diretório 'build/classes'.
+
+Para executar, entre no diretório 'build/classes'.
+O servidor (com o programa 'rmiregistry' executando):
+% java batalhanaval.BatalhaNavalServer
+
+Os clientes
+% java Interface.InterfaceBatalhaNaval
+
+`GG`
